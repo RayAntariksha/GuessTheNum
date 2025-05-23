@@ -4,7 +4,6 @@ use std::io;
 fn main() {
     // opening text
     println!("Guess the number!");
-    println!("hello");
     println!("Please enter the difficulty level: (1)Easy, (2)Medium, (3)Hard");
 
     //difficulty level
@@ -16,14 +15,17 @@ fn main() {
 
     let difficultyint: i32 = difficulty.trim().parse().expect("Please type a number!");
 
-    let mut difficulty_level: i32 = 0;
+    let difficulty_level: i32;
 
     if difficultyint == 1 {
         difficulty_level = 10;
     } else if difficultyint == 2 {
         difficulty_level = 8;
-    } else {
+    } else if difficultyint == 3 {
         difficulty_level = 5;
+    } else {
+        difficulty_level = -1;
+        println!("Invalid level selection")
     }
 
     //generating a random number that the user needs to guess
@@ -44,6 +46,11 @@ fn main() {
         //we add 1 to the number of attempts
         attempts += 1;
 
+        if attempts >= difficulty_level {
+            println!("GAME OVER! The number was: {}", secret_number);
+            break;
+        }
+
         if guess == secret_number {
             println!("Congratulations! You guessed the number!");
             println!("Attempts: {}", attempts);
@@ -53,10 +60,6 @@ fn main() {
             println!("Too Low!");
         } else {
             println!("Too High!");
-        }
-        if attempts == difficulty_level {
-            println!("GAME OVER! The number was: {}", secret_number);
-            break;
         }
     }
 }
